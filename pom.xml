@@ -10,7 +10,7 @@
         <relativePath/>
     </parent>
     <groupId>com.jjx</groupId>
-    <artifactId>tx-demo</artifactId>
+    <artifactId>seata_demo</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -25,11 +25,11 @@
     </properties>
 
     <modules>
+        <module>common-conf</module>
         <module>demo-a</module>
         <module>demo-b</module>
         <module>demo-c</module>
         <module>demo-d</module>
-        <module>demo-tm</module>
     </modules>
 
     <dependencyManagement>

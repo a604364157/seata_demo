@@ -3,12 +3,11 @@ package com.jjx.demob.controller;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.codingapi.txlcn.tc.annotation.LcnTransaction;
-import com.codingapi.txlcn.tc.core.DTXLocalContext;
 import com.jjx.demob.entity.UserB;
 import com.jjx.demob.entity.UserC;
 import com.jjx.demob.feign.UserCApi;
 import com.jjx.demob.service.IUserBService;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -39,8 +36,6 @@ public class UserBController {
     private IUserBService userBService;
     @Autowired
     private UserCApi userCApi;
-    @Autowired
-    private HttpServletRequest request;
 
     @GetMapping
     public UserB get(@RequestParam Integer keyId) {
@@ -48,18 +43,17 @@ public class UserBController {
         return userBService.getOne(param);
     }
 
-    @LcnTransaction
+    @GlobalTransactional
     @Transactional(rollbackFor = Exception.class)
     @PostMapping
     public Boolean save(@RequestBody UserB userB) {
+        if (userB.getAge() == 100) {
+            throw new RuntimeException("模拟报错");
+        }
         userBService.save(userB);
-//        UserC userC = new UserC();
-//        BeanUtils.copyProperties(userB, userC);
-//        userCApi.save(userC);
         return Boolean.TRUE;
     }
 
-    @LcnTransaction
     @Transactional(rollbackFor = Exception.class)
     @PutMapping
     public Boolean update(@RequestBody UserB userB) {

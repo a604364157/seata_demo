@@ -8,6 +8,9 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:8848
+    alibaba:
+      seata:
+        tx-service-group: demo-a
 
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
@@ -42,21 +45,6 @@ ribbon:
   ReadTimeout: 6000
   ConnectTimeout: 6000
 
-tx-lcn:
-  client:
-    manager-address: 127.0.0.1:8070
-    chain-level: 4
-  ribbon:
-    loadbalancer:
-      dtx:
-        enabled: true
-  logger:
-    enabled: true
-    driver-class-name: ${spring.datasource.driver-class-name}
-    jdbc-url: ${spring.datasource.url}
-    password: ${spring.datasource.password}
-    username: ${spring.datasource.username}
-
 swagger:
   #是否开启Swagger
   swagger-enable: true
@@ -73,4 +61,4 @@ swagger:
 logging:
   level:
     com.jjx.demoa.mapper: debug
-    com.codingapi.txlcn: trace
+    io.seata: debug

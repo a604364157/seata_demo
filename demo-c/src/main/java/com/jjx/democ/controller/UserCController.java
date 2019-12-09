@@ -3,8 +3,6 @@ package com.jjx.democ.controller;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.codingapi.txlcn.tc.annotation.LcnTransaction;
-import com.codingapi.txlcn.tc.core.DTXLocalContext;
 import com.jjx.democ.entity.UserC;
 import com.jjx.democ.entity.UserD;
 import com.jjx.democ.feign.UserDApi;
@@ -43,11 +41,9 @@ public class UserCController {
         return userCService.getOne(param);
     }
 
-    @LcnTransaction
     @Transactional(rollbackFor = Exception.class)
     @PostMapping
     public Boolean save(@RequestBody UserC userC) {
-        System.out.println(DTXLocalContext.getOrNew().getGroupId());
         userCService.save(userC);
         UserD userD = new UserD();
         BeanUtils.copyProperties(userC, userD);
@@ -55,7 +51,6 @@ public class UserCController {
         return Boolean.TRUE;
     }
 
-    @LcnTransaction
     @Transactional(rollbackFor = Exception.class)
     @PutMapping
     public Boolean update(@RequestBody UserC userC) {

@@ -2,11 +2,11 @@ package com.jjx.demoa.controller;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.jjx.demoa.entity.UserA;
 import com.jjx.demoa.entity.UserB;
 import com.jjx.demoa.feign.UserBApi;
 import com.jjx.demoa.service.IUserAService;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,18 +41,18 @@ public class UserAController {
         return userAService.getOne(param);
     }
 
-    @LcnTransaction
+    @GlobalTransactional
     @Transactional(rollbackFor = Exception.class)
     @PostMapping
     public Boolean save(@RequestBody UserA userA) {
-        userAService.save(userA);
         UserB userB = new UserB();
         BeanUtils.copyProperties(userA, userB);
+        userBApi.save(userB);
+        userB.setAge(100);
         userBApi.save(userB);
         return Boolean.TRUE;
     }
 
-    @LcnTransaction
     @Transactional(rollbackFor = Exception.class)
     @PutMapping
     public Boolean update(@RequestBody UserA userA) {

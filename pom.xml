@@ -25,7 +25,7 @@
     </properties>
 
     <modules>
-        <module>common-conf</module>
+        <module>common</module>
         <module>demo-a</module>
         <module>demo-b</module>
         <module>demo-c</module>

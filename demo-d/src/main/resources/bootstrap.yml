@@ -1,5 +1,8 @@
 server:
   port: 10004
+  tomcat:
+    max-connections: 100
+    max-threads: 100
 
 spring:
   application:
@@ -8,6 +11,9 @@ spring:
     nacos:
       discovery:
         server-addr:  localhost:8848
+    alibaba:
+      seata:
+        tx-service-group: demo-d
 
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
@@ -41,35 +47,14 @@ ribbon:
   ReadTimeout: 6000
   ConnectTimeout: 6000
 
-tx-lcn:
-  client:
-    manager-address: 127.0.0.1:8070
-    chain-level: 4
-  ribbon:
-    loadbalancer:
-      dtx:
-        enabled: true
-  logger:
-    enabled: true
-    driver-class-name: ${spring.datasource.driver-class-name}
-    jdbc-url: ${spring.datasource.url}
-    password: ${spring.datasource.password}
-    username: ${spring.datasource.username}
-
 swagger:
-  #是否开启Swagger
   swagger-enable: true
-  #swagger文档名称
   title: 测试服务D
-  #swagger文档描述
   description: 测试服务D REST-API在线文档文档
-  #swagger文档版本
   version: 1.0
   apis:
-    #待生成Swagger API文档的controller的包名
     base-package: com.jjx.demod
 
 logging:
   level:
     com.jjx.demoa.mapper: debug
-    com.codingapi.txlcn: debug

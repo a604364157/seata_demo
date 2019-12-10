@@ -1,5 +1,6 @@
 package com.jjx.demob;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -13,7 +14,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @EnableFeignClients
 @EnableDiscoveryClient
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@MapperScan("com.jjx.demob.mapper")
+@SpringBootApplication(scanBasePackages = {"com.jjx"}, exclude = DataSourceAutoConfiguration.class)
 public class DemoBApplication {
 
     public static void main(String[] args) {

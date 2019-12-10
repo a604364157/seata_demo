@@ -1,5 +1,8 @@
 server:
   port: 10002
+  tomcat:
+    max-connections: 100
+    max-threads: 100
 
 spring:
   application:
@@ -45,16 +48,11 @@ ribbon:
   ConnectTimeout: 6000
 
 swagger:
-  #是否开启Swagger
   swagger-enable: true
-  #swagger文档名称
   title: 测试服务B
-  #swagger文档描述
   description: 测试服务B REST-API在线文档文档
-  #swagger文档版本
   version: 1.0
   apis:
-    #待生成Swagger API文档的controller的包名
     base-package: com.jjx.demob
 
 logging:

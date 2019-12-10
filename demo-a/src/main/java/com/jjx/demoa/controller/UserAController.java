@@ -48,7 +48,7 @@ public class UserAController {
         UserB userB = new UserB();
         BeanUtils.copyProperties(userA, userB);
         userBApi.save(userB);
-        userB.setAge(100);
+//        userB.setAge(100);
         userBApi.save(userB);
         return Boolean.TRUE;
     }

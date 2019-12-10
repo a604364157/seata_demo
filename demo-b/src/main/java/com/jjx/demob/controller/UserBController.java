@@ -1,6 +1,5 @@
 package com.jjx.demob.controller;
 
-
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.jjx.demob.entity.UserB;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 
 /**
  * <p>
@@ -47,10 +45,10 @@ public class UserBController {
     @Transactional(rollbackFor = Exception.class)
     @PostMapping
     public Boolean save(@RequestBody UserB userB) {
-        if (userB.getAge() == 100) {
-            throw new RuntimeException("模拟报错");
-        }
         userBService.save(userB);
+        UserC userC = new UserC();
+        BeanUtils.copyProperties(userB, userC);
+        userCApi.save(userC);
         return Boolean.TRUE;
     }
 

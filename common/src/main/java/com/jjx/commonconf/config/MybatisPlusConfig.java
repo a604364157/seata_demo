@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 /**
  * @author jiangjx
  */
-@MapperScan("com.jjx.demoa.mapper")
 @Configuration
 @EnableTransactionManagement
 public class MybatisPlusConfig {

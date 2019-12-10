@@ -1,10 +1,10 @@
 package com.jjx.demod.controller;
 
-
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.jjx.demod.entity.UserD;
 import com.jjx.demod.service.IUserDService;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,9 +38,13 @@ public class UserDController {
         return userDService.getOne(param);
     }
 
+    @GlobalTransactional
     @Transactional(rollbackFor = Exception.class)
     @PostMapping
     public Boolean save(@RequestBody UserD userD) {
+        if (userD.getAge() == 100) {
+            throw new RuntimeException("模拟报错");
+        }
         try {
             TimeUnit.MILLISECONDS.sleep(500);
         } catch (InterruptedException e) {
